@@ -10,8 +10,15 @@ class Home:
             "4": ("Journey Details", self.journey_details),
             "5": ("Cancel Ticket", self.cancel_ticket),
             "6": ("Boarding Pass", self.boarding_pass),
+            "7": ("Show All User Details", self.show_all_users),
             "0": ("Exit", self.exit_program)
         }
+    def show_all_users(self):
+        try:
+            from ShowAllUsers import show_all_users
+            show_all_users()
+        except Exception as e:
+            print("Error displaying user details:", e)
 
     def display_menu(self):
         print("BD AIRLINE WELCOMES YOU")
