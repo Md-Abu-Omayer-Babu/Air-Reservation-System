@@ -21,20 +21,32 @@ class Home:
             print("Error displaying user details:", e)
 
     def display_menu(self):
-        print("BD AIRLINE WELCOMES YOU")
-        print("Please select an option:")
+        # ANSI escape codes for color
+        BLUE = '\033[94m'
+        CYAN = '\033[96m'
+        GREEN = '\033[92m'
+        YELLOW = '\033[93m'
+        RED = '\033[91m'
+        RESET = '\033[0m'
+        print(f"{CYAN}\n==============================")
+        print(f"   \U0001F6EB BD AIRLINE WELCOMES YOU   ")
+        print("==============================" + RESET)
+        print(f"{YELLOW}Please select an option:{RESET}")
         for key, (desc, _) in self.menu_options.items():
-            print(f"{key}. {desc}")
+            print(f"{GREEN}{key}. {desc}{RESET}")
 
     def run(self):
+        BLUE = '\033[94m'
+        RED = '\033[91m'
+        RESET = '\033[0m'
         while True:
             self.display_menu()
-            choice = input("Enter your choice: ")
+            choice = input(f"{BLUE}Enter your choice: {RESET}")
             action = self.menu_options.get(choice)
             if action:
                 action[1]()
             else:
-                print("Invalid choice. Please try again.")
+                print(f"{RED}Invalid choice. Please try again.{RESET}")
 
     def flight_details(self):
         from FlightInfo import FlightInfo
@@ -61,7 +73,9 @@ class Home:
         BoardingPass().run()
 
     def exit_program(self):
-        print("Exiting program. Goodbye!")
+        GREEN = '\033[92m'
+        RESET = '\033[0m'
+        print(f"{GREEN}Exiting program. Goodbye! \U0001F44B{RESET}")
         exit()
 
 if __name__ == "__main__":

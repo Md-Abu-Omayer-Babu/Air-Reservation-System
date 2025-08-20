@@ -5,16 +5,22 @@ class AddCustomer:
         self.db_path = 'airline.db'  # You can change this path as needed
 
     def get_input(self):
-        print("ADD CUSTOMER DETAILS")
-        name = input("Name: ")
-        nationality = input("Nationality: ")
-        aadhar = input("Aadhar Number: ")
-        address = input("Address: ")
-        gender = input("Gender (Male/Female): ")
-        phone = input("Phone: ")
+        CYAN = '\033[96m'
+        YELLOW = '\033[93m'
+        RESET = '\033[0m'
+        print(f"{CYAN}\n===== ADD CUSTOMER DETAILS ====={RESET}")
+        name = input(f"{YELLOW}Name: {RESET}")
+        nationality = input(f"{YELLOW}Nationality: {RESET}")
+        aadhar = input(f"{YELLOW}Aadhar Number: {RESET}")
+        address = input(f"{YELLOW}Address: {RESET}")
+        gender = input(f"{YELLOW}Gender (Male/Female): {RESET}")
+        phone = input(f"{YELLOW}Phone: {RESET}")
         return name, nationality, phone, address, aadhar, gender
 
     def save_to_db(self, name, nationality, phone, address, aadhar, gender):
+        GREEN = '\033[92m'
+        RED = '\033[91m'
+        RESET = '\033[0m'
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -25,9 +31,9 @@ class AddCustomer:
             cursor.execute(query, (name, nationality, phone, address, aadhar, gender))
             conn.commit()
             conn.close()
-            print("Customer Details Added Successfully")
+            print(f"{GREEN}\u2714 Customer Details Added Successfully!{RESET}")
         except Exception as e:
-            print("Error adding customer:", e)
+            print(f"{RED}Error adding customer: {e}{RESET}")
 
     def run(self):
         data = self.get_input()

@@ -32,21 +32,25 @@ class FlightInfo:
         conn.close()
 
     def show_flights(self):
+        CYAN = '\033[96m'
+        YELLOW = '\033[93m'
+        RED = '\033[91m'
+        RESET = '\033[0m'
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM flight")
             rows = cursor.fetchall()
             if rows:
-                print("\n--- FLIGHT INFORMATION ---")
-                print(" | ".join([desc[0] for desc in cursor.description]))
+                print(f"{CYAN}\n===== FLIGHT INFORMATION ====={RESET}")
+                print(f"{YELLOW}" + " | ".join([desc[0] for desc in cursor.description]) + f"{RESET}")
                 for row in rows:
                     print(" | ".join(str(item) for item in row))
             else:
-                print("No flight records found.")
+                print(f"{RED}No flight records found.{RESET}")
             conn.close()
         except Exception as e:
-            print("Error fetching flight information:", e)
+            print(f"{RED}Error fetching flight information: {e}{RESET}")
 
     def run(self):
         self.setup_db()

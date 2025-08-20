@@ -3,21 +3,26 @@ from Conn import Conn
 
 def show_all_users():
     conn = Conn().get_connection()
+    CYAN = '\033[96m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    RESET = '\033[0m'
     if not conn:
-        print("Failed to connect to database.")
+        print(f"{RED}Failed to connect to database.{RESET}")
         return
     cursor = conn.cursor()
     try:
         cursor.execute("SELECT * FROM users")  # Change 'users' to your actual table name
         rows = cursor.fetchall()
         if not rows:
-            print("No user data found.")
+            print(f"{RED}No user data found.{RESET}")
             return
-        print("All User Details:")
+        print(f"{CYAN}\n===== ALL USER DETAILS ====={RESET}")
+        print(f"{YELLOW}" + " | ".join([desc[0] for desc in cursor.description]) + f"{RESET}")
         for row in rows:
-            print(row)
+            print(" | ".join(str(item) for item in row))
     except Exception as e:
-        print("Error fetching user data:", e)
+        print(f"{RED}Error fetching user data: {e}{RESET}")
     finally:
         conn.close()
 

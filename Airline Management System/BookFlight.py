@@ -6,7 +6,9 @@ class BookFlight:
         self.db_path = 'airline.db'  # Update path if needed
 
     def get_aadhar(self):
-        aadhar = input("Enter Aadhar Number: ")
+        CYAN = '\033[96m'
+        RESET = '\033[0m'
+        aadhar = input(f"{CYAN}Enter Aadhar Number: {RESET}")
         return aadhar
 
     def fetch_user(self, aadhar):
@@ -22,14 +24,19 @@ class BookFlight:
             return None
 
     def get_flight_details(self):
-        source = input("Source: ")
-        destination = input("Destination: ")
-        fname = input("Flight Name: ")
-        fcode = input("Flight Code: ")
-        date = input("Date (YYYY-MM-DD): ")
+        YELLOW = '\033[93m'
+        RESET = '\033[0m'
+        source = input(f"{YELLOW}Source: {RESET}")
+        destination = input(f"{YELLOW}Destination: {RESET}")
+        fname = input(f"{YELLOW}Flight Name: {RESET}")
+        fcode = input(f"{YELLOW}Flight Code: {RESET}")
+        date = input(f"{YELLOW}Date (YYYY-MM-DD): {RESET}")
         return source, destination, fname, fcode, date
 
     def book_flight(self, aadhar, user_details, flight_details):
+        GREEN = '\033[92m'
+        RED = '\033[91m'
+        RESET = '\033[0m'
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -44,23 +51,27 @@ class BookFlight:
             )
             conn.commit()
             conn.close()
-            print(f"Flight booked successfully! Your PNR is: {pnr}")
+            print(f"{GREEN}\u2705 Flight booked successfully! Your PNR is: {pnr}{RESET}")
         except Exception as e:
-            print("Error booking flight:", e)
+            print(f"{RED}Error booking flight: {e}{RESET}")
 
     def run(self):
-        print("Book Flight")
+        CYAN = '\033[96m'
+        YELLOW = '\033[93m'
+        RED = '\033[91m'
+        RESET = '\033[0m'
+        print(f"{CYAN}\n===== BOOK FLIGHT ====={RESET}")
         aadhar = self.get_aadhar()
         user_details = self.fetch_user(aadhar)
         if user_details:
-            print(f"Name: {user_details[0]}")
-            print(f"Nationality: {user_details[1]}")
-            print(f"Address: {user_details[2]}")
-            print(f"Gender: {user_details[3]}")
+            print(f"{YELLOW}Name: {user_details[0]}{RESET}")
+            print(f"{YELLOW}Nationality: {user_details[1]}{RESET}")
+            print(f"{YELLOW}Address: {user_details[2]}{RESET}")
+            print(f"{YELLOW}Gender: {user_details[3]}{RESET}")
             flight_details = self.get_flight_details()
             self.book_flight(aadhar, user_details, flight_details)
         else:
-            print("No user found with the given Aadhar number.")
+            print(f"{RED}No user found with the given Aadhar number.{RESET}")
 
 if __name__ == "__main__":
     BookFlight().run()
