@@ -23,9 +23,12 @@ class FlightInfo:
         count = cursor.fetchone()[0]
         if count == 0:
             sample_flights = [
-                ("AI101", "Delhi", "Mumbai", "08:00", "10:00"),
-                ("AI202", "Mumbai", "Bangalore", "11:00", "13:30"),
-                ("AI303", "Bangalore", "Kolkata", "14:00", "17:00")
+                ("BG101", "Dhaka", "Chattogram", "07:00", "08:00"),
+                ("BG202", "Dhaka", "Sylhet", "09:00", "10:00"),
+                ("BG303", "Dhaka", "Cox's Bazar", "11:00", "12:15"),
+                ("BG404", "Chattogram", "Jessore", "13:00", "14:00"),
+                ("BG505", "Sylhet", "Barisal", "15:00", "16:30"),
+                ("BG606", "Dhaka", "Rajshahi", "17:00", "18:00")
             ]
             cursor.executemany("INSERT INTO flight (flight_number, origin, destination, departure_time, arrival_time) VALUES (?, ?, ?, ?, ?)", sample_flights)
             conn.commit()

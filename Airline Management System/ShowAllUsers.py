@@ -12,7 +12,14 @@ def show_all_users():
         return
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT * FROM users")  # Change 'users' to your actual table name
+        # Ensure 'users' table exists
+        cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            email TEXT,
+            phone TEXT
+        )''')
+        cursor.execute("SELECT * FROM users")
         rows = cursor.fetchall()
         if not rows:
             print(f"{RED}No user data found.{RESET}")
