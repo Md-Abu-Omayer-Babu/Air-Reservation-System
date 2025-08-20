@@ -6,6 +6,7 @@ __pycache__/
 
 # SQLite database
 *.db
+airline.db
 
 # VS Code
 .vscode/
