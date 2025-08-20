@@ -18,11 +18,11 @@ class JourneyDetails:
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM tickets WHERE pnr = ?", (pnr,))
+            cursor.execute("SELECT nid, name, src, dest, fname, fcode, date, pnr FROM tickets WHERE pnr = ?", (pnr,))
             rows = cursor.fetchall()
             if rows:
-                print(f"{CYAN}\n===== JOURNEY DETAILS ====={RESET}")
-                print(f"{YELLOW}" + " | ".join([desc[0] for desc in cursor.description]) + f"{RESET}")
+                print(f"{CYAN}\n===== JOURNEY DETAILS (Bangladesh) ====={RESET}")
+                print(f"{YELLOW}NID | Name | From | To | Flight Name | Flight Code | Date | PNR{RESET}")
                 for row in rows:
                     print(" | ".join(str(item) for item in row))
             else:
@@ -34,7 +34,7 @@ class JourneyDetails:
     def run(self):
         CYAN = '\033[96m'
         RESET = '\033[0m'
-        print(f"{CYAN}\n===== JOURNEY DETAILS ====={RESET}")
+        print(f"{CYAN}\n===== JOURNEY DETAILS (Bangladesh) ====={RESET}")
         pnr = self.get_pnr()
         self.show_details(pnr)
 

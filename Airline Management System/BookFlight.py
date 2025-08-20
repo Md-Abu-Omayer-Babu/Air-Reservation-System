@@ -5,17 +5,17 @@ class BookFlight:
     def __init__(self):
         self.db_path = 'airline.db'  # Update path if needed
 
-    def get_aadhar(self):
+    def get_nid(self):
         CYAN = '\033[96m'
         RESET = '\033[0m'
-        aadhar = input(f"{CYAN}Enter Aadhar Number: {RESET}")
-        return aadhar
+        nid = input(f"{CYAN}Enter NID Number: {RESET}")
+        return nid
 
-    def fetch_user(self, aadhar):
+    def fetch_user(self, nid):
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
-            cursor.execute("SELECT name, nationality, address, gender FROM passenger WHERE aadhar = ?", (aadhar,))
+            cursor.execute("SELECT name, nationality, address, gender FROM passenger WHERE nid = ?", (nid,))
             result = cursor.fetchone()
             conn.close()
             return result
@@ -26,14 +26,14 @@ class BookFlight:
     def get_flight_details(self):
         YELLOW = '\033[93m'
         RESET = '\033[0m'
-        source = input(f"{YELLOW}Source: {RESET}")
-        destination = input(f"{YELLOW}Destination: {RESET}")
-        fname = input(f"{YELLOW}Flight Name: {RESET}")
-        fcode = input(f"{YELLOW}Flight Code: {RESET}")
+        source = input(f"{YELLOW}From (e.g., Dhaka): {RESET}")
+        destination = input(f"{YELLOW}To (e.g., Chattogram): {RESET}")
+        fname = input(f"{YELLOW}Flight Name (e.g., Bangladesh Biman): {RESET}")
+        fcode = input(f"{YELLOW}Flight Code (e.g., BG101): {RESET}")
         date = input(f"{YELLOW}Date (YYYY-MM-DD): {RESET}")
         return source, destination, fname, fcode, date
 
-    def book_flight(self, aadhar, user_details, flight_details):
+    def book_flight(self, nid, user_details, flight_details):
         GREEN = '\033[92m'
         RED = '\033[91m'
         RESET = '\033[0m'
@@ -41,12 +41,12 @@ class BookFlight:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             cursor.execute('''CREATE TABLE IF NOT EXISTS tickets (
-                aadhar TEXT, name TEXT, nationality TEXT, address TEXT, gender TEXT,
+                nid TEXT, name TEXT, nationality TEXT, address TEXT, gender TEXT,
                 src TEXT, dest TEXT, fname TEXT, fcode TEXT, date TEXT, pnr TEXT)''')
             pnr = str(uuid.uuid4())[:8]
             cursor.execute(
                 "INSERT INTO tickets VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (aadhar, user_details[0], user_details[1], user_details[2], user_details[3],
+                (nid, user_details[0], user_details[1], user_details[2], user_details[3],
                  flight_details[0], flight_details[1], flight_details[2], flight_details[3], flight_details[4], pnr)
             )
             conn.commit()
@@ -60,18 +60,18 @@ class BookFlight:
         YELLOW = '\033[93m'
         RED = '\033[91m'
         RESET = '\033[0m'
-        print(f"{CYAN}\n===== BOOK FLIGHT ====={RESET}")
-        aadhar = self.get_aadhar()
-        user_details = self.fetch_user(aadhar)
+        print(f"{CYAN}\n===== BOOK FLIGHT (Bangladesh) ====={RESET}")
+        nid = self.get_nid()
+        user_details = self.fetch_user(nid)
         if user_details:
             print(f"{YELLOW}Name: {user_details[0]}{RESET}")
             print(f"{YELLOW}Nationality: {user_details[1]}{RESET}")
             print(f"{YELLOW}Address: {user_details[2]}{RESET}")
             print(f"{YELLOW}Gender: {user_details[3]}{RESET}")
             flight_details = self.get_flight_details()
-            self.book_flight(aadhar, user_details, flight_details)
+            self.book_flight(nid, user_details, flight_details)
         else:
-            print(f"{RED}No user found with the given Aadhar number.{RESET}")
+            print(f"{RED}No user found with the given NID number.{RESET}")
 
 if __name__ == "__main__":
     BookFlight().run()

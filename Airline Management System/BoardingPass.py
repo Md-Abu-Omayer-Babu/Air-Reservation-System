@@ -14,7 +14,6 @@ class BoardingPass:
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
-            # Example query, adjust table/column names as needed
             cursor.execute("SELECT name, nationality, src, dest, fname, fcode, date FROM tickets WHERE pnr = ?", (pnr,))
             result = cursor.fetchone()
             conn.close()
@@ -29,11 +28,11 @@ class BoardingPass:
         RED = '\033[91m'
         RESET = '\033[0m'
         if details:
-            print(f"{CYAN}\n===== AIR INDIA BOARDING PASS ====={RESET}")
-            print(f"{YELLOW}Name: {details[0]}{RESET}")
+            print(f"{CYAN}\n===== BANGLADESH AIRLINES BOARDING PASS ====={RESET}")
+            print(f"{YELLOW}Passenger Name: {details[0]}{RESET}")
             print(f"{YELLOW}Nationality: {details[1]}{RESET}")
-            print(f"{YELLOW}Source: {details[2]}{RESET}")
-            print(f"{YELLOW}Destination: {details[3]}{RESET}")
+            print(f"{YELLOW}From: {details[2]}{RESET}")
+            print(f"{YELLOW}To: {details[3]}{RESET}")
             print(f"{YELLOW}Flight Name: {details[4]}{RESET}")
             print(f"{YELLOW}Flight Code: {details[5]}{RESET}")
             print(f"{YELLOW}Date: {details[6]}{RESET}")
@@ -43,7 +42,7 @@ class BoardingPass:
     def run(self):
         CYAN = '\033[96m'
         RESET = '\033[0m'
-        print(f"{CYAN}\n===== AIR INDIA - Boarding Pass ====={RESET}")
+        print(f"{CYAN}\n===== BANGLADESH AIRLINES - Boarding Pass ====={RESET}")
         pnr = self.get_pnr()
         details = self.fetch_details(pnr)
         self.display_boarding_pass(details)

@@ -8,16 +8,16 @@ class AddCustomer:
         CYAN = '\033[96m'
         YELLOW = '\033[93m'
         RESET = '\033[0m'
-        print(f"{CYAN}\n===== ADD CUSTOMER DETAILS ====={RESET}")
-        name = input(f"{YELLOW}Name: {RESET}")
-        nationality = input(f"{YELLOW}Nationality: {RESET}")
-        aadhar = input(f"{YELLOW}Aadhar Number: {RESET}")
-        address = input(f"{YELLOW}Address: {RESET}")
-        gender = input(f"{YELLOW}Gender (Male/Female): {RESET}")
-        phone = input(f"{YELLOW}Phone: {RESET}")
-        return name, nationality, phone, address, aadhar, gender
+        print(f"{CYAN}\n===== ADD CUSTOMER DETAILS (Bangladesh) ====={RESET}")
+        name = input(f"{YELLOW}Full Name: {RESET}")
+        nationality = 'Bangladeshi'
+        nid = input(f"{YELLOW}NID Number: {RESET}")
+        address = input(f"{YELLOW}Address (District, Upazila): {RESET}")
+        gender = input(f"{YELLOW}Gender (Male/Female/Other): {RESET}")
+        phone = input(f"{YELLOW}Mobile Number (+880): {RESET}")
+        return name, nationality, phone, address, nid, gender
 
-    def save_to_db(self, name, nationality, phone, address, aadhar, gender):
+    def save_to_db(self, name, nationality, phone, address, nid, gender):
         GREEN = '\033[92m'
         RED = '\033[91m'
         RESET = '\033[0m'
@@ -25,10 +25,10 @@ class AddCustomer:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             cursor.execute('''CREATE TABLE IF NOT EXISTS passenger (
-                name TEXT, nationality TEXT, phone TEXT, address TEXT, aadhar TEXT, gender TEXT)
+                name TEXT, nationality TEXT, phone TEXT, address TEXT, nid TEXT, gender TEXT)
             ''')
             query = "INSERT INTO passenger VALUES (?, ?, ?, ?, ?, ?)"
-            cursor.execute(query, (name, nationality, phone, address, aadhar, gender))
+            cursor.execute(query, (name, nationality, phone, address, nid, gender))
             conn.commit()
             conn.close()
             print(f"{GREEN}\u2714 Customer Details Added Successfully!{RESET}")

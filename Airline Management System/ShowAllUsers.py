@@ -12,24 +12,21 @@ def show_all_users():
         return
     cursor = conn.cursor()
     try:
-        # Ensure 'users' table exists
-        cursor.execute('''CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            email TEXT,
-            phone TEXT
+        # Ensure 'passenger' table exists for Bangladeshi context
+        cursor.execute('''CREATE TABLE IF NOT EXISTS passenger (
+            name TEXT, nationality TEXT, phone TEXT, address TEXT, nid TEXT, gender TEXT
         )''')
-        cursor.execute("SELECT * FROM users")
+        cursor.execute("SELECT name, nationality, phone, address, nid, gender FROM passenger")
         rows = cursor.fetchall()
         if not rows:
-            print(f"{RED}No user data found.{RESET}")
+            print(f"{RED}No passenger data found.{RESET}")
             return
-        print(f"{CYAN}\n===== ALL USER DETAILS ====={RESET}")
-        print(f"{YELLOW}" + " | ".join([desc[0] for desc in cursor.description]) + f"{RESET}")
+        print(f"{CYAN}\n===== ALL PASSENGER DETAILS (Bangladesh) ====={RESET}")
+        print(f"{YELLOW}Name | Nationality | Mobile | Address | NID | Gender{RESET}")
         for row in rows:
             print(" | ".join(str(item) for item in row))
     except Exception as e:
-        print(f"{RED}Error fetching user data: {e}{RESET}")
+        print(f"{RED}Error fetching passenger data: {e}{RESET}")
     finally:
         conn.close()
 

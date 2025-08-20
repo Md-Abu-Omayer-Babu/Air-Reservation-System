@@ -15,7 +15,7 @@ class Cancel:
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
-            cursor.execute("SELECT name, fcode, date FROM tickets WHERE pnr = ?", (pnr,))
+            cursor.execute("SELECT name, src, dest, fcode, date FROM tickets WHERE pnr = ?", (pnr,))
             result = cursor.fetchone()
             conn.close()
             return result
@@ -43,13 +43,15 @@ class Cancel:
         YELLOW = '\033[93m'
         RED = '\033[91m'
         RESET = '\033[0m'
-        print(f"{CYAN}\n===== CANCELLATION ====={RESET}")
+        print(f"{CYAN}\n===== CANCELLATION (Bangladesh) ====={RESET}")
         pnr = self.get_pnr()
         ticket = self.fetch_ticket(pnr)
         if ticket:
-            print(f"{YELLOW}Name: {ticket[0]}{RESET}")
-            print(f"{YELLOW}Flight Code: {ticket[1]}{RESET}")
-            print(f"{YELLOW}Date of Travel: {ticket[2]}{RESET}")
+            print(f"{YELLOW}Passenger Name: {ticket[0]}{RESET}")
+            print(f"{YELLOW}From: {ticket[1]}{RESET}")
+            print(f"{YELLOW}To: {ticket[2]}{RESET}")
+            print(f"{YELLOW}Flight Code: {ticket[3]}{RESET}")
+            print(f"{YELLOW}Date of Travel: {ticket[4]}{RESET}")
             confirm = input(f"{YELLOW}Do you want to cancel this ticket? (yes/no): {RESET}")
             if confirm.lower() == "yes":
                 self.cancel_ticket(pnr)

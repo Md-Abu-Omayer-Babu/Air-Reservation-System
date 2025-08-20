@@ -29,7 +29,7 @@ class Home:
         RED = '\033[91m'
         RESET = '\033[0m'
         print(f"{CYAN}\n==============================")
-        print(f"   \U0001F6EB BD AIRLINE WELCOMES YOU   ")
+        print(f"   \U0001F6EB BANGLADESH BIMAN AIRLINES   ")
         print("==============================" + RESET)
         print(f"{YELLOW}Please select an option:{RESET}")
         for key, (desc, _) in self.menu_options.items():
@@ -75,7 +75,7 @@ class Home:
     def exit_program(self):
         GREEN = '\033[92m'
         RESET = '\033[0m'
-        print(f"{GREEN}Exiting program. Goodbye! \U0001F44B{RESET}")
+        print(f"{GREEN}Exiting program. Goodbye! \U0001F44B\nThank you for choosing Bangladesh Biman Airlines!{RESET}")
         exit()
 
 if __name__ == "__main__":
